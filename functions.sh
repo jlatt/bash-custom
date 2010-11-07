@@ -35,7 +35,6 @@ if [[ -z "$bash_custom_functions" ]]; then
 	}
 
 	bash_custom_functions="true"
-	#export -f append_path prepend_path source_file source_custom
 
 	set +a
 fi
