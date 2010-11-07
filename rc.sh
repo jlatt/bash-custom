@@ -9,9 +9,11 @@ ACK_PAGER_COLOR="less $LESS"
 SSH_HOST="$(echo "$SSH_CLIENT" | cut -d ' ' -f 1)"
 HISTFILESIZE="2000"
 HISTCONTROL="ignoredups"
-EDITOR="emacsclient -c"
+EDITOR="$CUSTOM_DIR/editor"
 VISUAL="$EDITOR"
+MANPAGER="most"
 PAGER="less"
+MOST_SWITCHES="-s -t4"
 bash_custom_rc="true"
 
 set +a
