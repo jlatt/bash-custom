@@ -1,7 +1,6 @@
 #!/bin/bash
 set -a
 
-prepend_path "$HOME/Applications/Emacs.app/Contents/MacOS/bin"
 append_path "/Developer/usr/bin"
 append_path "/opt/local/bin"  # MacPorts
 append_path "/opt/local/sbin" # MacPorts
