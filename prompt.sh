@@ -10,7 +10,7 @@ function maybe_git_branch() {
 	fi
 }
 
-PS1="${CGREEN}\u${CAQUA}@${CRED}\h${CAQUA}:${CBLUE}\w \$(maybe_git_branch)"
+PS1="${CGREEN}\u${CAQUA}@${CRED}\h${CAQUA}:${CBLUE}\w\$(maybe_git_branch)"
 PS1="${PS1}\n${CGREEN}\$${CNORMAL} "
 PROMPT_COMMAND="$CUSTOM_DIR/prompt-command"
 bash_custom_prompt="true"
