@@ -1,0 +1,2 @@
+#!/bin/bash
+git show-ref --heads | awk '{ print $2; }' | cut -c 12-

@@ -1,0 +1,8 @@
+#!/bin/bash
+app="$1"
+if [[ "$app" ]]; then
+    osascript -e "tell application \"${app}\" to activate"
+else
+    echo "usage: $(basename $0) [Application]"
+    exit 1
+fi

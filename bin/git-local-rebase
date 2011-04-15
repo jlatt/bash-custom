@@ -1,0 +1,2 @@
+#!/bin/bash
+git rebase -i "$@" "$(git merge-base HEAD "canon/master")"

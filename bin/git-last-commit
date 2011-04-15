@@ -1,0 +1,2 @@
+#!/bin/bash
+git log -1 --format=oneline | cut -c 42-
