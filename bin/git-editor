@@ -1,2 +1,4 @@
 #!/bin/bash
-"$HOME/bin/"emacsclient -t "$@"
+switch-to Emacs
+"$HOME/bin/emacsclient" -c "$@"
+switch-to Terminal

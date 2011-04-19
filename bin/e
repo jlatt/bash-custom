@@ -1,2 +1,5 @@
 #!/bin/bash
-emacsclient -c -n "$@" && osascript -e 'tell application "Emacs" to activate'
+if [[ "$@" ]]; then
+    switch-to Emacs
+    emacsclient -c -n "$@"
+fi

@@ -3,6 +3,6 @@ if [[ -z "$1" ]]; then
 	exit 1
 else
 	branch="$1"
-	commit="${2-canon/master}"
+	commit="${2-origin/master}"
 	colorize git checkout -b "$branch" "$commit"
 fi

@@ -1,2 +1,2 @@
 #!/bin/bash
-/Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs --daemon
+/Applications/Emacs.app/Contents/MacOS/Emacs --daemon
