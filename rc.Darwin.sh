@@ -2,8 +2,6 @@
 set -a
 
 append_path "/Developer/usr/bin"
-append_path "/opt/local/bin"  # MacPorts
-append_path "/opt/local/sbin" # MacPorts
 append_path "/usr/local/bin"
 append_path "/usr/local/sbin"
 
