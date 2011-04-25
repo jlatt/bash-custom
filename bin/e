@@ -1,5 +1,5 @@
 #!/bin/bash
 if [[ "$@" ]]; then
     switch-to Emacs
-    emacsclient -c -n "$@"
+    emacsclient -n "$@"
 fi
