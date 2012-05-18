@@ -10,5 +10,5 @@ LS_COLORS="no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;
 
 set +a
 
-source_file `brew --prefix`/etc/bash_completion
-source_file /usr/local/git/contrib/completion/git-completion.bash
+source_file "(brew --prefix)/etc/bash_completion"
+source_file "$(brew --prefix)/git/contrib/completion/git-completion.bash"

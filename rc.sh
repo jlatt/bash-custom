@@ -11,13 +11,14 @@ SSH_HOST="$(echo "$SSH_CLIENT" | cut -d ' ' -f 1)"
 HISTFILESIZE="2000"
 HISTCONTROL="ignoredups"
 ALTERNATE_EDITOR="emacs"
-EDITOR="$CUSTOM_DIR/editor"
+EDITOR="editor"
 VISUAL="$EDITOR"
 GIT_EDITOR="git-editor"
 MANPAGER="less"
 PAGER="less"
 MOST_SWITCHES="-s -t4"
 bash_custom_rc="true"
+NODE_PATH="/usr/local/lib/node_modules"
 
 set +a
 

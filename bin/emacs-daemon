@@ -1,2 +1,4 @@
 #!/bin/bash
-/Applications/Emacs.app/Contents/MacOS/Emacs --daemon
+cd "$HOME"
+"${HOME}/Applications/Emacs.app/Contents/MacOS/Emacs" --daemon
+emacsclient -c -n
