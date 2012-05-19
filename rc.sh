@@ -4,7 +4,7 @@ set -a
 prepend_path "$HOME/bin"
 prepend_path "$CUSTOM_DIR/bin"
 SHORT_HOSTNAME="$(echo "$HOSTNAME" | cut -d . -f 1)"
-LESS="-FRX -x 4"
+LESS="-FRXx4"
 ACK_PAGER="less"
 ACK_PAGER_COLOR="less $LESS"
 SSH_HOST="$(echo "$SSH_CLIENT" | cut -d ' ' -f 1)"
@@ -21,5 +21,7 @@ bash_custom_rc="true"
 NODE_PATH="/usr/local/lib/node_modules"
 
 set +a
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
 source_custom "rc.$(uname -s)"
