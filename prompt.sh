@@ -11,14 +11,13 @@ function maybe_git_branch() {
         if [[ "$upstream_branch" ]]; then
             branch_name="${branch_name} <-> ${AQUA}${upstream_branch}${NORMAL}"
         fi
-		echo -e "${branch_name}"
         echo -e "\r"
+		echo -e "${branch_name}"
 	fi
 }
 
-PS1="\$(maybe_git_branch)${CGREEN}\u${CAQUA}@${CRED}\h${CAQUA}:${CBLUE}\w${NORMAL}"
-PS1="${PS1}\n${CGREEN}\$${CNORMAL} "
-PROMPT_COMMAND="$CUSTOM_DIR/prompt-command"
+PS1="${CGREEN}\u${CAQUA}@${CRED}\h${CAQUA}:${CBLUE}\w${NORMAL}\$(maybe_git_branch)\n${CGREEN}\$${CNORMAL} "
+#PROMPT_COMMAND="$CUSTOM_DIR/prompt-command"
 bash_custom_prompt="true"
 
 set +a
