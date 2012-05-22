@@ -11,7 +11,7 @@ function maybe_git_branch() {
         if [[ "$upstream_branch" ]]; then
             branch_name="${branch_name} <-> ${AQUA}${upstream_branch}${NORMAL}"
         fi
-		echo -e "[${branch_name}]"
+		echo -e "${branch_name}"
         echo -e "\r"
 	fi
 }
