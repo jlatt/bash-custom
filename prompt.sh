@@ -6,13 +6,17 @@ set -a
 function maybe_git_branch() {
 	branch_name="$(git branch-name)"
 	if [[ "$branch_name" ]]; then
-        branch_name="${YELLOW}git${NORMAL}:${AQUA}${branch_name}${NORMAL}"
+        prompt="${YELLOW}branch${NORMAL}:${AQUA}${branch_name}${NORMAL}"
         upstream_branch="$(git upstream-branch)"
         if [[ "$upstream_branch" ]]; then
-            branch_name="${branch_name} <-> ${AQUA}${upstream_branch}${NORMAL}"
+            merge="merge"
+            if [[ "$(git config --bool branch.${branch_name}.rebase)" == 'true' ]]; then
+                merge="rebase"
+            fi
+            prompt="${prompt} ${YELLOW}${merge}${NORMAL}:${AQUA}${upstream_branch}${NORMAL}"
         fi
         echo -e "\r"
-		echo -e "${branch_name}"
+		echo -e "${prompt}"
 	fi
 }
 
