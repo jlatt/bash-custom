@@ -1,9 +1,0 @@
-#!/bin/bash
-colorize git sync-remote
-git show-ref --heads | awk '{ print $2; }' | cut -c 12- | grep -v '^hold/' | while read branch; do
-	colorize git checkout "$branch"
-	if ! colorize git rebase canon/master; then
-		echo -e "${RED}Failed to rebase ${AQUA}${branch}${RED} automatically${NORMAL}."
-		colorize git rebase --abort
-	fi
-done
