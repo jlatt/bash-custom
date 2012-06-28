@@ -13,6 +13,7 @@ function maybe_git_branch() {
             if [[ "$(git config --bool branch.${branch_name}.rebase)" == 'true' ]]; then
                 merge="r"
             fi
+            upstream_branch="${upstream_branch/%${branch_name}/*}"
             prompt="${prompt} ${YELLOW}${merge}${NORMAL}:${AQUA}${upstream_branch}${NORMAL}"
         fi
         echo -e "\r"
