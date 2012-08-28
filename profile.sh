@@ -10,3 +10,5 @@ if which -s hub; then
     eval "$(hub alias -s)"
 fi
 alias g="git"
+
+source_custom "profile.$(uname -s)"
