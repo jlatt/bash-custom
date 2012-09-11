@@ -1,4 +1,4 @@
 #!/bin/bash
 cd "$HOME"
-"/usr/local/Cellar/emacs/24.1/Emacs.app/Contents/MacOS/Emacs" --daemon
+"/usr/local/Cellar/emacs/24.2/Emacs.app/Contents/MacOS/Emacs" --daemon
 emacsclient -c -n
