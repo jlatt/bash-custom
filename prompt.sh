@@ -22,6 +22,6 @@ function maybe_git_branch() {
 }
 
 PS1="${CGREEN}\u${CAQUA}@${CRED}\h${CAQUA}:${CBLUE}\w${CNORMAL}\$(maybe_git_branch)\n${CGREEN}\$${CNORMAL} "
+PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#${HOME}/~}\007"'
 
-
-export bash_custom_prompt="true" maybe_git_branch PS1
+export bash_custom_prompt="true" maybe_git_branch PS1 PROMPT_COMMAND
