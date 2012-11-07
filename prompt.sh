@@ -1,8 +1,6 @@
 #!/bin/bash
 source_custom colors
 
-set -a
-
 git="$(which git)"
 
 function maybe_git_branch() {
@@ -23,7 +21,7 @@ function maybe_git_branch() {
 	fi
 }
 
-PS1="${CGREEN}\u${CAQUA}@${CRED}\h${CAQUA}:${CBLUE}\w${NORMAL}\$(maybe_git_branch)\n${CGREEN}\$${CNORMAL} "
-bash_custom_prompt="true"
+PS1="${CGREEN}\u${CAQUA}@${CRED}\h${CAQUA}:${CBLUE}\w${CNORMAL}\$(maybe_git_branch)\n${CGREEN}\$${CNORMAL} "
 
-set +a
+
+export bash_custom_prompt="true" maybe_git_branch PS1

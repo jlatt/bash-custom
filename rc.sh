@@ -1,5 +1,4 @@
 #!/bin/bash
-set -a
 
 prepend_path "$HOME/bin"
 prepend_path "$CUSTOM_DIR/bin"
@@ -17,11 +16,7 @@ GIT_EDITOR="git-editor"
 MANPAGER="less"
 PAGER="less"
 MOST_SWITCHES="-s -t4"
-bash_custom_rc="true"
-NODE_PATH="/usr/local/lib/node_modules"
 
-set +a
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+export PATH SHORT_HOSTNAME LESS ACK_PAGER_COLOR ACK_PAGER SSH_HOST HISTFILESIZE HISTCONTROL ALTERNATE_EDITOR EDITOR VISUAL GIT_EDITOR MANPAGER PAGER MOST_SWITCHES bash_custom_rc="true" NODE_PATH
 
 source_custom "rc.$(uname -s)"

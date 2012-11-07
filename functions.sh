@@ -1,7 +1,5 @@
 #!/bin/bash
 if [[ -z "$bash_custom_functions" ]]; then
-	set -a
-
 	# append a path to $PATH
 	function append_path() {
 		[[ -d "$1" ]] || return 1
@@ -25,7 +23,7 @@ if [[ -z "$bash_custom_functions" ]]; then
 	# Conditionally source a file, if it exists.
 	function source_file() {
 		[[ -r "$1" ]] || return 1
-		. "$1"
+		source "$1"
 	}
 
 	CUSTOM_DIR="$(dirname ${BASH_ARGV[0]})"
@@ -34,7 +32,14 @@ if [[ -z "$bash_custom_functions" ]]; then
 		source_file "$CUSTOM_DIR/$1.sh"
 	}
 
-	bash_custom_functions="true"
+    function has_executable() {
+        which -s "$@"
+    }
 
-	set +a
+    function time_call() {
+        echo "timing $@"
+        time "$@"
+    }
+
+	export bash_custom_functions="true" append_path prepend_path source_file source_custom has_executable
 fi
