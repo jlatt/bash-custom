@@ -1,0 +1,3 @@
+#!/bin/bash
+switch-to Emacs
+emacsclient -c -e "(ediff \"$1\" \"$2\")"
