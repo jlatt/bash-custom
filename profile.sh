@@ -6,6 +6,7 @@ alias du="du -sh"
 alias ls="ls -FhG"
 alias la="ls -a"
 alias ll="ls -l"
+alias grep="grep --color=auto"
 
 if has_executable hub; then
     eval "$(hub alias -s)"
