@@ -1,6 +1,4 @@
 #!/bin/bash
 cd "$HOME"
-local_bin="/usr/local/bin"
-emacs_dir="$(dirname $(readlink "${local_bin}/emacs"))"
-"${local_bin}/${emacs_dir}/../Emacs.app/Contents/MacOS/Emacs" --daemon
+"$(brew --prefix)/opt/emacs/Emacs.app/Contents/MacOS/Emacs" --daemon
 emacsclient -c -n
