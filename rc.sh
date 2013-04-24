@@ -17,7 +17,6 @@ GIT_EDITOR="$EDITOR"
 MANPAGER="less"
 PAGER="less"
 MOST_SWITCHES="-s -t4"
-bash_custom_rc="true"
 set +a
 
 source_custom "rc.$(uname -s)"

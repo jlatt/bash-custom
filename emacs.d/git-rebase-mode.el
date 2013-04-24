@@ -60,6 +60,7 @@
 (defvar git-rebase-font-lock-defaults
   '(git-rebase-font-lock-keywords t))
 
+;;;###autoload
 (define-derived-mode git-rebase-mode fundamental-mode "git-rebase"
   "git rebase mode"
   ;; key bindings

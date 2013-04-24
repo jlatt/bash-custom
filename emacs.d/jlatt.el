@@ -1,6 +1,3 @@
-;; Safely start the server.
-;;(unwind-protect (server-start))
-
 (add-to-list 'custom-theme-load-path "~/.bash/emacs.d/themes")
 (load-theme 'jlatt t)
 
@@ -16,7 +13,6 @@
       mouse-wheel-scroll-amount '(1 ((shift) . 1))
       ring-bell-function 'ignore
       show-paren-delay 0
-      show-trailing-whitespace t
       size-indication-mode t
       tab-width 4)
 (prefer-coding-system 'utf-8)
@@ -37,7 +33,6 @@
               indent-tabs-mode nil
               fill-column 80)
 (load "editorconfig")
-(electric-indent-mode +1) ; Indent on newlines.
 
 ;; line wrapping
 (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
@@ -52,28 +47,34 @@
 ;; editing modes
 ;;
 
+(defun add-autoload (mode)
+  "Add a simple autoload statement."
+  (autoload mode (symbol-name mode) (symbol-name mode) t))
+
 ;; yaml
-(require 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
+(add-autoload 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-mode))
 
 ;; git rebase
-(require 'git-rebase-mode)
-(add-to-list 'auto-mode-alist '("git-rebase-todo$" . git-rebase-mode))
+(add-autoload 'git-rebase-mode)
+(add-to-list 'auto-mode-alist '("git-rebase-todo\\'" . git-rebase-mode))
 
 ;; javascript
 (setq font-lock-quasiconstant-face '(:foreground "MediumPurple2"))
 (font-lock-add-keywords 'js-mode '(("constructor" . font-lock-quasiconstant-face)
                                    ("prototype" . font-lock-quasiconstant-face)
                                    ("callee" . font-lock-quasiconstant-face)))
-(add-to-list 'auto-mode-alist '("\\.js$" . js-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
-(add-to-list 'auto-mode-alist '("\\.js\\.erb$" . js-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js-mode))
+(add-to-list 'auto-mode-alist '("\\.json\\'" . js-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\.erb\\'" . js-mode))
+(add-hook 'js-mode-hook (lambda ()
+						  (electric-indent-mode +1))) ; Indent on newlines.
 
 ;; coffeescript
-(require 'coffee-mode)
+(add-autoload 'coffee-mode)
 
 ;; mustache
-(require 'mustache-mode)
+(add-autoload 'mustache-mode)
 
 ;; org
 (setq org-directory "~/Dropbox/org"
@@ -87,32 +88,12 @@
       org-default-notes-file (concat org-directory "/work.org"))
 (global-set-key "\C-ca" 'org-agenda)
 (define-key global-map "\C-cc" 'org-capture)
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-
-;; lyrics
-(define-generic-mode lyrics-mode nil
-                     '("chorus" "verse" "bridge" "part" "repeat" "coda")
-                     '(("\\(#[^\n]*\\)$" 1 font-lock-comment-face t)
-                       ("\\bverse \\([a-zA-Z0-9]+\\)" 1 font-lock-variable-name-face)
-                       ("\\bpart \\([a-zA-Z0-9]+\\)" 1 font-lock-variable-name-face)
-                       ("\\(:\\)" 1 font-lock-constant-face))
-                     '("\\.lyrics\\.txt$")
-                     nil
-                     "Major mode for editing lyrics")
-
-;; css
-(add-to-list 'auto-mode-alist '("\\.css\\.erb$" . css-mode))
-(add-hook 'css-mode-hook (lambda ()
-                           (setq tab-width 2)))
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
 ;; html
-(add-hook 'html-mode-hook
-          (lambda ()
-            (setq tab-width 2)
-            (setq sgml-basic-offset 2)))
-(add-to-list 'auto-mode-alist '("\\.dtl$" . html-mode))
-(add-to-list 'auto-mode-alist '("\\.jst$" . html-mode))
-(add-to-list 'auto-mode-alist '("\\.tmpl$" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.dtl\\'" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.jst\\'" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.tmpl\\'" . html-mode))
 
 ;; python
 (add-hook 'python-mode-hook (lambda ()
@@ -120,24 +101,25 @@
                               (setq python-indent 4)))
 
 ;; ruby
-(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.jbuilder$" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.jbuilder\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.gemspec\\'" . ruby-mode))
 
 ;; haml
-(require 'haml-mode)
+(autoload 'haml-mode "haml-mode" "haml" t)
+(add-to-list 'auto-mode-alist '("\\.haml\\'" . haml-mode))
 
 ;; sass
-(require 'scss-mode)
-(add-to-list 'auto-mode-alist '("\\.scss\\.erb$" . scss-mode))
+(add-autoload 'scss-mode)
+(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
 
 ;; ediff
 (setq ediff-split-window-function 'split-window-horizontally)
 
 ;; markdown
-(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+(add-autoload 'markdown-mode)
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;; haskell
 ;;(load "/opt/local/share/emacs/site-lisp/haskell-mode-2.4/haskell-site-file")
@@ -148,7 +130,7 @@
 
 ;; go
 (add-to-list 'load-path "/usr/local/opt/go/misc/emacs")
-(require 'go-mode-load)
+(require 'go-mode-load) ;; runs autoload statements
 (add-hook 'go-mode-hook (lambda ()
                           (add-hook 'before-save-hook #'gofmt-before-save)))
 
@@ -180,7 +162,6 @@
                      sh-mode-hook))
   (add-hook mode-hook (lambda ()
                         (show-paren-mode 1)
-                        (setq show-trailing-whitespace t)
                         (add-hook 'before-save-hook 'delete-trailing-whitespace))))
 
 (provide 'jlatt)
