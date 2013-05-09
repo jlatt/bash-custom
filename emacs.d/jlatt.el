@@ -5,7 +5,7 @@
 (setq backup-directory-alist '((".*" . "~/.emacs_backups/"))
       column-number-mode t
       global-hl-line-mode 1
-      indicate-buffer-boundaries (quote right)
+      indicate-buffer-boundaries 'right
       indicate-empty-lines nil
       inhibit-splash-screen t
       initial-scratch-message nil
@@ -20,13 +20,12 @@
 (global-auto-revert-mode) ; Revert unchanged files every 5 seconds.
 (require 'midnight) ; Clean up unused buffers.
 
-;; move between windows with meta+arrows
-(windmove-default-keybindings 'meta)
-
 ;; frames
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (setq frame-title-format "%f")
+(setq-default cursor-type 'bar)
+(set-cursor-color "yellow")
 
 ;; whitespace
 (setq-default tab-width 4
@@ -43,6 +42,12 @@
 (setq ido-enable-flex-matching t)
 (ido-mode t)
 
+(require 'ag)
+(setq ag-highlight-search t)
+(global-set-key (kbd "<f5>") 'ag-project)
+(global-set-key (kbd "<f6>") 'ag-regexp-project-at-point)
+
+
 ;;
 ;; editing modes
 ;;
@@ -55,9 +60,9 @@
 (add-autoload 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-mode))
 
-;; git rebase
-(add-autoload 'git-rebase-mode)
-(add-to-list 'auto-mode-alist '("git-rebase-todo\\'" . git-rebase-mode))
+;; git
+(add-to-list 'load-path "/usr/local/opt/magit/share/emacs/site-lisp")
+(require 'magit)
 
 ;; javascript
 (setq font-lock-quasiconstant-face '(:foreground "MediumPurple2"))

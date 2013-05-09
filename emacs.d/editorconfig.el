@@ -8,7 +8,7 @@
 
 ;; Redistribution and use in source and binary forms, with or without
 ;; modification, are permitted provided that the following conditions are met:
-;; 
+;;
 ;; 1. Redistributions of source code must retain the above copyright notice,
 ;;    this list of conditions and the following disclaimer.
 ;; 2. Redistributions in binary form must reproduce the above copyright notice,
@@ -63,13 +63,24 @@
   (if tab_width
       (setq tab-width (string-to-number tab_width))))
 
-(defun edconf-set-line-ending (end-of-line)
-  "Set line ending style to CR, LF, or CRLF"
-  (set-buffer-file-coding-system
-   (cond
-    ((equal end-of-line "lf") 'undecided-unix)
-    ((equal end-of-line "cr") 'undecided-mac)
-    ((equal end-of-line "crlf") 'undecided-dos))))
+(defun edconf-charset (charset)
+  (cond ((equal charset "latin1") "latin-1")
+        ((equal charset "utf-8") "utf-8")
+        ((equal charset "utf-8-bom") "utf-8-with-signature")
+        ((equal charset "utf-16be") "utf-16be")
+        ((equal charset "utf-16le") "utf-16le")))
+
+(defun edconf-line-ending (end-of-line)
+  (cond ((equal end-of-line "lf") "unix")
+        ((equal end-of-line "cr") "mac")
+        ((equal end-of-line "crlf") "dos")))
+
+(defun edconf-set-coding-system (charset end-of-line)
+  "Set charset and line ending style to CR, LF, or CRLF"
+  (setq buffer-file-coding-system
+        (intern (concat (edconf-charset charset)
+                        "-"
+                        (edconf-line-ending end-of-line)))))
 
 (defun edconf-get-properties ()
   "Call EditorConfig core and return output"
@@ -95,15 +106,17 @@
 		    val (mapconcat 'identity (cdr key-val) ""))
 	      (puthash key val properties)))))))
 
-(add-hook 'find-file-hook
-	  (function (lambda ()
-		      (let (props indent_style indent_size tab_width)
-			(setq props (edconf-parse-properties (edconf-get-properties))
-			      indent_style (gethash "indent_style" props)
-			      indent_size (gethash "indent_size" props)
-			      tab_width (gethash "tab_width" props)
-			      end_of_line (gethash "end_of_line" props))
-			(edconf-set-indentation indent_style indent_size tab_width)
-			(edconf-set-line-ending end_of_line)))))
+(add-hook
+ 'find-file-hook
+ (function (lambda ()
+             (let (props indent_style indent_size tab_width charset)
+               (setq props (edconf-parse-properties (edconf-get-properties))
+                     indent_style (gethash "indent_style" props)
+                     indent_size (gethash "indent_size" props)
+                     tab_width (gethash "tab_width" props)
+                     end_of_line (gethash "end_of_line" props)
+                     charset (gethash "charset" props))
+               (edconf-set-indentation indent_style indent_size tab_width)
+               (edconf-set-coding-system charset end_of_line)))))
 
 (provide 'editorconfig)
