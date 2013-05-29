@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -a
-append_path "/Developer/usr/bin"
+append_path "$HOME/Projects/git-hooks"
 prepend_path "/usr/local/sbin"
 prepend_path "/usr/local/bin"
 MANPATH="/usr/share/man:/usr/local/man:/usr/local/share/man"
