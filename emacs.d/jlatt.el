@@ -2,7 +2,8 @@
 (load-theme 'jlatt t)
 
 ;; reasonable defaults
-(setq backup-directory-alist '((".*" . "~/.emacs_backups/"))
+(setq backup-directory-alist `((".*" . ,temporary-file-directory))
+      auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
       column-number-mode t
       global-hl-line-mode 1
       indicate-buffer-boundaries 'right
@@ -13,8 +14,7 @@
       mouse-wheel-scroll-amount '(1 ((shift) . 1))
       ring-bell-function 'ignore
       show-paren-delay 0
-      size-indication-mode t
-      tab-width 4)
+      size-indication-mode t)
 (prefer-coding-system 'utf-8)
 (fset 'yes-or-no-p 'y-or-n-p) ; 'y' or 'n' instead of 'yes' or 'no' for questions
 (global-auto-revert-mode) ; Revert unchanged files every 5 seconds.
@@ -61,8 +61,8 @@
 (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-mode))
 
 ;; git
-(add-to-list 'load-path "/usr/local/opt/magit/share/emacs/site-lisp")
-(require 'magit)
+(require 'git-rebase-mode)
+(add-to-list 'auto-mode-alist '("git-rebase-todo\\'" . git-rebase-mode))
 
 ;; javascript
 (setq font-lock-quasiconstant-face '(:foreground "MediumPurple2"))
