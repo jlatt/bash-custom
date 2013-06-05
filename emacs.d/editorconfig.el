@@ -1,10 +1,14 @@
 ;;; editorconfig.el --- EditorConfig Emacs extension
 
-;; Copyright (C) 2011-2012 EditorConfig Team
+;; Copyright (C) 2011-2013 EditorConfig Team
 
-;; Author: Trey Hunner
+;; Author: EditorConfig Team <editorconfig@googlegroups.com>
 ;; Version: 0.1
-;; Homepage: http://editorconfig.org
+;; URL: http://editorconfig.org
+
+;; See
+;; http://github.com/editorconfig/editorconfig-emacs/graphs/contributors
+;; or the CONTRIBUTORS file for the list of contributors.
 
 ;; Redistribution and use in source and binary forms, with or without
 ;; modification, are permitted provided that the following conditions are met:
@@ -45,19 +49,28 @@
 (defun edconf-set-indentation (style &optional size tab_width)
   "Set indentation type from given style and size"
   (when (equal style "space")
-      (setq indent-tabs-mode nil
-	    size (string-to-number size)
-	    c-basic-offset size
-	    python-indent size
-	    py-indent-offset size
-	    perl-indent-level size
-	    cperl-indent-level size
-	    tab-stop-list (let ((stops (cons size ())))
-			    (while (< (car stops) 120)
-			      (setq stops (cons
-					   (+ size (car stops))
-					   stops)))
-                            (nreverse stops))))
+    (setq indent-tabs-mode nil
+          size (string-to-number size)
+          LaTeX-indent-level size
+          LaTeX-item-indent size
+          TeX-brace-indent-level size
+          c-basic-offset size
+          cperl-indent-level size
+          js-indent-level size
+          lisp-indent-offset size
+          perl-indent-level size
+          py-indent-offset size
+          python-indent size
+          ruby-indent-level size
+          css-indent-offset size
+          ruby-indent-level size
+          ;(make-local-variable 'sgml-basic-offset) size
+          tab-stop-list (let ((stops (cons size ())))
+                          (while (< (car stops) 120)
+                            (setq stops (cons
+                                         (+ size (car stops))
+                                         stops)))
+                          (nreverse stops))))
   (when (equal style "tab")
     (setq indent-tabs-mode t))
   (if tab_width
@@ -82,6 +95,36 @@
                         "-"
                         (edconf-line-ending end-of-line)))))
 
+(defun edconf-set-trailing-nl (final-newline)
+  (cond
+   ((equal final-newline "true")
+    ;; keep prefs around how/when the nl is added, if set - otherwise add on save
+    (setq      require-final-newline      (or require-final-newline t)
+               mode-require-final-newline (or mode-require-final-newline t)))
+   ((equal final-newline "false")
+    ;; FIXME: Add functionality for actually REMOVING any trailing newlines here!
+    ;;        (rather than just making sure we don't automagically ADD a new one)
+    (setq      require-final-newline nil
+               mode-require-final-newline nil))))
+
+(defun edconf-set-trailing-ws (trim-trailing-ws)
+  "set up trimming of trailing whitespace at end of lines"
+  (make-local-variable 'write-file-functions) ;; just current buffer
+  (when (equal trim-trailing-ws "true")
+    ;; when true we push delete-trailing-whitespace (emacs > 21)
+    ;; to write-file-functions
+    (add-to-list
+     'write-file-functions
+     'delete-trailing-whitespace))
+  (when (equal trim-trailing-ws "false")
+    ;; when false we remove every delete-trailing-whitespace
+    ;; from write-file-functions
+    (setq
+     write-file-functions
+     (delete
+      'delete-trailing-whitespace
+      write-file-functions))))
+
 (defun edconf-get-properties ()
   "Call EditorConfig core and return output"
   (let ((oldbuf (current-buffer)))
@@ -97,26 +140,27 @@
   "Create properties hash table from string of properties"
   (let (props-list properties)
     (setq props-list (split-string props-string "\n")
-	  properties (make-hash-table :test 'equal))
+          properties (make-hash-table :test 'equal))
     (dolist (prop props-list properties)
       (let ((key-val (split-string prop " *= *")))
-	(if (> (length key-val) 1)
-	    (let (key val)
-	      (setq key (car key-val)
-		    val (mapconcat 'identity (cdr key-val) ""))
-	      (puthash key val properties)))))))
+        (when (> (length key-val) 1)
+          (let ((key (intern (car key-val)))
+                (val (mapconcat 'identity (cdr key-val) "")))
+            (puthash key val properties)))))))
 
-(add-hook
- 'find-file-hook
- (function (lambda ()
-             (let (props indent_style indent_size tab_width charset)
-               (setq props (edconf-parse-properties (edconf-get-properties))
-                     indent_style (gethash "indent_style" props)
-                     indent_size (gethash "indent_size" props)
-                     tab_width (gethash "tab_width" props)
-                     end_of_line (gethash "end_of_line" props)
-                     charset (gethash "charset" props))
-               (edconf-set-indentation indent_style indent_size tab_width)
-               (edconf-set-coding-system charset end_of_line)))))
+(defun edconf-find-file-hook ()
+  (when (executable-find edconf-exec-path)
+    (let ((props (edconf-parse-properties (edconf-get-properties))))
+      (edconf-set-indentation (gethash 'indent_style props)
+                              (gethash 'indent_size props)
+                              (gethash 'tab_width props))
+      (edconf-set-coding-system (gethash 'end_of_line props))
+      (edconf-set-trailing-nl (gethash 'insert_final_newline props))
+      (edconf-set-trailing-ws (gethash 'trim_trailing_whitespace props)))))
+
+;;;###autoload
+(add-hook 'find-file-hook 'edconf-find-file-hook)
 
 (provide 'editorconfig)
+
+;;; editorconfig.el ends here
