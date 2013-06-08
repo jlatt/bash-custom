@@ -154,7 +154,8 @@
       (edconf-set-indentation (gethash 'indent_style props)
                               (gethash 'indent_size props)
                               (gethash 'tab_width props))
-      (edconf-set-coding-system (gethash 'end_of_line props))
+      (edconf-set-coding-system (gethash 'charset props)
+                                (gethash 'end_of_line props))
       (edconf-set-trailing-nl (gethash 'insert_final_newline props))
       (edconf-set-trailing-ws (gethash 'trim_trailing_whitespace props)))))
 

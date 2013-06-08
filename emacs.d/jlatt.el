@@ -72,8 +72,6 @@
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.json\\'" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.js\\.erb\\'" . js-mode))
-(add-hook 'js-mode-hook (lambda ()
-						  (electric-indent-mode +1))) ; Indent on newlines.
 
 ;; coffeescript
 (add-autoload 'coffee-mode)
