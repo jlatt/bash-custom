@@ -1,6 +1,8 @@
 (add-to-list 'custom-theme-load-path "~/.bash/emacs.d/themes")
 (load-theme 'jlatt t)
 
+(setq debug-on-error t)
+
 ;; reasonable defaults
 (setq backup-directory-alist `((".*" . ,temporary-file-directory))
       auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
@@ -73,11 +75,16 @@
 (add-to-list 'auto-mode-alist '("\\.json\\'" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.js\\.erb\\'" . js-mode))
 
+(defun jshint-current-file ()
+  (interactive)
+  (shell-command (format "jshint %s" (shell-quote-argument (buffer-file-name)))))
+
 ;; coffeescript
 (add-autoload 'coffee-mode)
 
 ;; mustache
 (add-autoload 'mustache-mode)
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . mustache-mode))
 
 ;; org
 (setq org-directory "~/Dropbox/org"

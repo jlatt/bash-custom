@@ -3,8 +3,8 @@
 ;; Copyright (C) 2011-2013 EditorConfig Team
 
 ;; Author: EditorConfig Team <editorconfig@googlegroups.com>
-;; Version: 0.1
-;; URL: http://editorconfig.org
+;; Version: 0.2
+;; URL: http://github.com/editorconfig/editorconfig-emacs#readme
 
 ;; See
 ;; http://github.com/editorconfig/editorconfig-emacs/graphs/contributors
@@ -46,47 +46,56 @@
 
 (defvar edconf-exec-path "editorconfig")
 
-(defun edconf-set-indentation (style &optional size tab_width)
+(defun safe-string-to-number (n)
+  (if (equal n nil) nil (string-to-number n)))
+
+(defun tab-stop-list (size)
+  (let ((stops (cons size ())))
+    (while (< (car stops) 120)
+      (setq stops (cons
+                   (+ size (car stops))
+                   stops)))
+    (nreverse stops)))
+
+(defun edconf-set-indentation (style &optional tab_size tab_width)
   "Set indentation type from given style and size"
-  (when (equal style "space")
-    (setq indent-tabs-mode nil
-          size (string-to-number size)
-          LaTeX-indent-level size
-          LaTeX-item-indent size
-          TeX-brace-indent-level size
-          c-basic-offset size
-          cperl-indent-level size
-          js-indent-level size
-          lisp-indent-offset size
-          perl-indent-level size
-          py-indent-offset size
-          python-indent size
-          ruby-indent-level size
-          css-indent-offset size
-          ruby-indent-level size
-          ;(make-local-variable 'sgml-basic-offset) size
-          tab-stop-list (let ((stops (cons size ())))
-                          (while (< (car stops) 120)
-                            (setq stops (cons
-                                         (+ size (car stops))
-                                         stops)))
-                          (nreverse stops))))
-  (when (equal style "tab")
-    (setq indent-tabs-mode t))
-  (if tab_width
-      (setq tab-width (string-to-number tab_width))))
+  (cond ((equal style "space")
+         (let ((size (safe-string-to-number tab_size)))
+           (setq indent-tabs-mode nil
+                 LaTeX-indent-level size
+                 LaTeX-item-indent size
+                 TeX-brace-indent-level size
+                 c-basic-offset size
+                 cperl-indent-level size
+                 js-indent-level size
+                 lisp-indent-offset size
+                 perl-indent-level size
+                 py-indent-offset size
+                 python-indent size
+                 ruby-indent-level size)
+           (if size
+               (setq tab-stop-list (tab-stop-list size)))))
+        ((equal style "tab")
+         (setq indent-tabs-mode t)))
+
+  (let ((tab-width (safe-string-to-number tab_width)))
+    (if (not (equal tab-width nil))
+        (setq tab-width (string-to-number tab_width)))))
+
 
 (defun edconf-charset (charset)
   (cond ((equal charset "latin1") "latin-1")
         ((equal charset "utf-8") "utf-8")
         ((equal charset "utf-8-bom") "utf-8-with-signature")
         ((equal charset "utf-16be") "utf-16be")
-        ((equal charset "utf-16le") "utf-16le")))
+        ((equal charset "utf-16le") "utf-16le")
+        (t "undecided")))
 
 (defun edconf-line-ending (end-of-line)
   (cond ((equal end-of-line "lf") "unix")
         ((equal end-of-line "cr") "mac")
-        ((equal end-of-line "crlf") "dos")))
+        ((equal end-of-line "crlf") "dos")
+        (t "unix")))
 
 (defun edconf-set-coding-system (charset end-of-line)
   "Set charset and line ending style to CR, LF, or CRLF"
