@@ -1,54 +1,48 @@
 (add-to-list 'custom-theme-load-path "~/.bash/emacs.d/themes")
 (load-theme 'jlatt t)
 
-(setq debug-on-error t)
-
 ;; reasonable defaults
-(setq backup-directory-alist `((".*" . ,temporary-file-directory))
-      auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
-      column-number-mode t
-      global-hl-line-mode 1
-      indicate-buffer-boundaries 'right
-      indicate-empty-lines nil
-      inhibit-splash-screen t
-      initial-scratch-message nil
-      magic-mode-alist ()
-      mouse-wheel-scroll-amount '(1 ((shift) . 1))
-      ring-bell-function 'ignore
-      show-paren-delay 0
-      size-indication-mode t)
+(setq-default debug-on-error nil
+              backup-directory-alist `((".*" . ,temporary-file-directory))
+              auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
+              column-number-mode t
+              global-hl-line-mode 1
+              indicate-buffer-boundaries 'right
+              indicate-empty-lines nil
+              inhibit-splash-screen t
+              initial-scratch-message nil
+              magic-mode-alist ()
+              mouse-wheel-scroll-amount '(1 ((shift) . 1))
+              ring-bell-function 'ignore
+              show-paren-delay 0
+              frame-title-format "%f"
+              cursor-type 'bar
+              size-indication-mode t
+              tab-width 4
+              indent-tabs-mode nil
+              fill-column 80
+              visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+(set-cursor-color 'yellow)
 (prefer-coding-system 'utf-8)
 (fset 'yes-or-no-p 'y-or-n-p) ; 'y' or 'n' instead of 'yes' or 'no' for questions
 (global-auto-revert-mode) ; Revert unchanged files every 5 seconds.
 (require 'midnight) ; Clean up unused buffers.
-
-;; frames
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(setq frame-title-format "%f")
-(setq-default cursor-type 'bar)
-(set-cursor-color "yellow")
+(if (boundp 'global-visual-line-mode) (global-visual-line-mode))
 
 ;; whitespace
-(setq-default tab-width 4
-              indent-tabs-mode nil
-              fill-column 80)
-(load "editorconfig")
-
-;; line wrapping
-(setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
-(if (boundp 'global-visual-line-mode) (global-visual-line-mode))
+;;(load "editorconfig")
 
 ;; ido
 (require 'ido)
-(setq ido-enable-flex-matching t)
+(setq-default ido-enable-flex-matching t)
 (ido-mode t)
 
 (require 'ag)
 (setq ag-highlight-search t)
 (global-set-key (kbd "<f5>") 'ag-project)
 (global-set-key (kbd "<f6>") 'ag-regexp-project-at-point)
-
 
 ;;
 ;; editing modes
@@ -74,6 +68,7 @@
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.json\\'" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.js\\.erb\\'" . js-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\.cjm\\'" . js-mode))
 
 (defun jshint-current-file ()
   (interactive)
@@ -123,6 +118,7 @@
 ;; sass
 (add-autoload 'scss-mode)
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+(setq scss-compile-at-save nil)
 
 ;; ediff
 (setq ediff-split-window-function 'split-window-horizontally)

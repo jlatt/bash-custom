@@ -1,6 +1,6 @@
 (deftheme jlatt "jlatt's theme")
 
-(custom-theme-set-faces 
+(custom-theme-set-faces
  'jlatt
  '(default ((t (:background "black" :foreground "#eee"))))
  '(modeline ((t (:background "white" :foreground "dodgerblue"))))
@@ -31,22 +31,5 @@
  '(secondary-selection ((t (:background "blue"))))
  '(show-paren-match-face ((t (:background "aqua"))))
  '(show-paren-mismatch-face ((t (:background "magenta" :foreground "white"))))
- '(underline ((t (:underline t))))
- )
-;; ((background-color . "black")
-;;  (background-mode . dark)
-;;  (border-color . "blue")
-;;  (cursor-color . "gray30")
-;;   (foreground-color . "white")
-;;   (mouse-color . "black"))
-;;  (default ((t (nil))))
-;;  (message-cited-text-face ((t (:foreground "red"))))
-;;  (message-header-cc-face ((t (:bold t :foreground "yellow"))))
-;;  (message-header-name-face ((t (:foreground "yellow"))))
-;;  (message-header-newsgroups-face ((t (:italic t :bold t :foreground "lime green"))))
-;;  (message-header-other-face ((t (:foreground "#b00000"))))
-;;  (message-header-subject-face ((t (:foreground "yellow"))))
-;;  (message-header-to-face ((t (:bold t :foreground "yellow"))))
-;;  (message-header-xheader-face ((t (:foreground "dodgerblue"))))
-;;  (message-mml-face ((t (:foreground "yellow"))))
-;;  (message-separator-face ((t (:foreground "dodgerblue"))))
+ '(cursor-color ((t (:background "yellow"))))
+ '(underline ((t (:underline t)))))
