@@ -1,0 +1,62 @@
+# -*- mode: conf -*-
+[user]
+    name = Jeremy Latt
+    email = jeremy.latt@gmail.com
+[alias]
+    br = branch
+    ci = commit
+    co = checkout
+    d = diff
+    f = fetch --prune
+    fa = fetch --prune --all
+    graph = log --graph --topo-order --decorate  --pretty=condensed
+    l = log --topo-order --decorate --pretty=condensed
+    s = status -s
+    pgrep = grep -P
+    ff = merge --ff-only
+    cp = cherry-pick
+[color]
+    ui = auto
+[github]
+    user = jlatt
+    password = !osx-github-password
+[gist]
+    private = yes
+    browse = no
+[rerere]
+    enabled = true
+[rebase]
+    autosquash = true
+[advice]
+    detachedHead = false
+[tig]
+    tab-size = 4
+[difftool "ediff"]
+    cmd = emacs-diff "$LOCAL" "$REMOTE"
+[diff]
+    tool = ediff
+[mergetool "emerge"]
+    cmd = emacs-merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+[merge]
+    tool = emerge
+    defaultToUpstream = true
+[mergetool]
+    keepBackup = false
+[push]
+    default = upstream
+[pretty]
+    condensed = %C(yellow)%h%Creset %C(cyan)%an%Creset %s%Creset%C(red)%d%Creset
+    view = %h %s %d%n%cd by %cn%n
+[branch]
+    autosetuprebase = remote
+[credential]
+    helper = osxkeychain
+    username = jlatt
+[hub]
+    protocol = https
+[hooks]
+    warn = true
+[grep]
+    lineNumber = true
+[clean]
+    requireForce = false

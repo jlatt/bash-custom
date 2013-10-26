@@ -1,0 +1,12 @@
+# -*- mode: conf -*-
+shell -${SHELL}
+escape ^Oo
+defscrollback 5000
+startup_message off
+#term xterm-color
+termcapinfo xterm* ti@:te@
+vbell off
+
+hardstatus on
+hardstatus alwayslastline
+hardstatus string "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %Y/%m/%d %c "
