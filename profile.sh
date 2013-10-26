@@ -16,3 +16,7 @@ fi
 source_file "$HOME/.rvm/scripts/rvm"
 
 source_custom "profile.$(uname -s)"
+
+function cdr() {
+    cd "$(git rev-parse --show-toplevel)"
+}

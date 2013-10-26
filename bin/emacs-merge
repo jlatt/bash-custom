@@ -1,2 +1,2 @@
 #!/bin/bash
-emacsclient -nw -e "(ediff-merge \"$1\" \"$2\" \"$3\")"
+emacsclient -nw -e "(ediff-merge \"$1\" \"$2\" \"$3\" \"$4\")"

@@ -1,3 +1,9 @@
+(if window-system
+    (server-start)
+  (if (fboundp 'menu-bar-mode) (menu-bar-mode -1)))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+
 (add-to-list 'custom-theme-load-path "~/.bash/emacs.d/themes")
 (load-theme 'jlatt t)
 
@@ -27,9 +33,11 @@
 (fset 'yes-or-no-p 'y-or-n-p) ; 'y' or 'n' instead of 'yes' or 'no' for questions
 (global-auto-revert-mode) ; Revert unchanged files every 5 seconds.
 (require 'midnight) ; Clean up unused buffers.
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (boundp 'global-visual-line-mode) (global-visual-line-mode))
+
+;; tramp
+(require 'tramp)
+(add-to-list 'tramp-remote-path "~/usr/bin")
 
 ;; whitespace
 ;;(load "editorconfig")
@@ -60,11 +68,14 @@
 (require 'git-rebase-mode)
 (add-to-list 'auto-mode-alist '("git-rebase-todo\\'" . git-rebase-mode))
 
+(require 'git-commit)
+(add-to-list 'auto-mode-alist '("\\PULLREQ_EDITMSG\\'" . git-commit-mode))
+
 ;; javascript
 (setq font-lock-quasiconstant-face '(:foreground "MediumPurple2"))
 (font-lock-add-keywords 'js-mode '(("constructor" . font-lock-quasiconstant-face)
-                                   ("prototype" . font-lock-quasiconstant-face)
-                                   ("callee" . font-lock-quasiconstant-face)))
+                                    ("prototype" . font-lock-quasiconstant-face)
+                                    ("callee" . font-lock-quasiconstant-face)))
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.json\\'" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.js\\.erb\\'" . js-mode))
@@ -127,13 +138,6 @@
 (add-autoload 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
-;; haskell
-;;(load "/opt/local/share/emacs/site-lisp/haskell-mode-2.4/haskell-site-file")
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-;;(add-hook 'haskell-mode-hook 'font-lock-mode)
-;;(add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
-
 ;; go
 (add-to-list 'load-path "/usr/local/opt/go/misc/emacs")
 (require 'go-mode-load) ;; runs autoload statements
@@ -147,7 +151,6 @@
                 emacs-lisp-mode
                 go-mode
                 haml-mode
-                ;;haskell-mode
                 html-mode
                 js-mode
                 ruby-mode
@@ -160,7 +163,6 @@
                      emacs-lisp-mode-hook
                      go-mode-hook
                      haml-mode-hook
-                     ;;haskell-mode-hooks
                      html-mode-hook
                      js-mode-hook
                      ruby-mode-hook
