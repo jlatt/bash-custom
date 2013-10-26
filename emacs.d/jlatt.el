@@ -139,7 +139,7 @@
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;; go
-(add-to-list 'load-path "/usr/local/opt/go/misc/emacs")
+(add-to-list 'load-path "/usr/local/opt/go/libexec/misc/emacs")
 (require 'go-mode-load) ;; runs autoload statements
 (add-hook 'go-mode-hook (lambda ()
                           (add-hook 'before-save-hook #'gofmt-before-save)))
