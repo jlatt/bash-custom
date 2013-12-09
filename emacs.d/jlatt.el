@@ -7,6 +7,11 @@
 (add-to-list 'custom-theme-load-path "~/.bash/emacs.d/themes")
 (load-theme 'jlatt t)
 
+;; package repos
+(require 'package)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+
 ;; reasonable defaults
 (setq-default debug-on-error nil
               backup-directory-alist `((".*" . ,temporary-file-directory))
@@ -38,6 +43,9 @@
 ;; tramp
 (require 'tramp)
 (add-to-list 'tramp-remote-path "~/usr/bin")
+
+;; unique buffer names
+(require 'uniquify)
 
 ;; whitespace
 ;;(load "editorconfig")
