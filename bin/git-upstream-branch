@@ -1,0 +1,9 @@
+#!/bin/bash
+branch="$(git branch-name)"
+remote="$(git config "branch.${branch}.remote")"
+upstream="$(git config "branch.${branch}.merge")"
+if [[ "$remote" && "$upstream" ]]; then
+    echo "${remote}/${upstream##refs/heads/}"
+else
+	exit 1
+fi
