@@ -7,6 +7,8 @@
 (add-to-list 'custom-theme-load-path "~/.bash/emacs.d/themes")
 (load-theme 'jlatt t)
 
+(add-to-list 'exec-path "/usr/local/bin")
+
 ;; package repos
 (require 'package)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
