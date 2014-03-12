@@ -2,6 +2,6 @@
 if [[ "$@" ]]; then
     switch-to Emacs
     for file in "$@"; do
-        emacsclient -c -n "$file"
+        emacsclient -n "$file"
     done
 fi

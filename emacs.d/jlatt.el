@@ -57,7 +57,6 @@
 (setq-default ido-enable-flex-matching t)
 (ido-mode t)
 
-(require 'ag)
 (setq ag-highlight-search t)
 (global-set-key (kbd "<f5>") 'ag-project)
 (global-set-key (kbd "<f6>") 'ag-regexp-project-at-point)

@@ -14,7 +14,7 @@ ALTERNATE_EDITOR="emacs -nw"
 EDITOR="editor"
 VISUAL="$EDITOR"
 GIT_EDITOR="$EDITOR"
-MANPAGER="less"
+MANPAGER="most"
 PAGER="less"
 MOST_SWITCHES="-s -t4"
 set +a
